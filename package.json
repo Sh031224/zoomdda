@@ -1,0 +1,20 @@
+{
+  "name": "zoomdda",
+  "version": "1.0.0",
+  "description": "My awesome Nuxt.js project",
+  "author": "Sh031224",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "node-sass": "^4.13.1",
+    "nuxt": "^2.0.0",
+    "sass-loader": "^8.0.2"
+  },
+  "devDependencies": {}
+}

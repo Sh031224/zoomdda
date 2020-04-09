@@ -1,0 +1,12 @@
+$bg-color: #fff;
+$footer-color: #24292e;
+
+:root {
+  --bg-color: #fff;
+  --footer-color: #24292e;
+}
+
+html.darkmode:root {
+  --bg-color: #212121;
+  --footer-color: #fff;
+}

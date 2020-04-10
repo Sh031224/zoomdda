@@ -7,6 +7,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+/models/access.js
+/models/server.js
+
 # Runtime data
 pids
 *.pid

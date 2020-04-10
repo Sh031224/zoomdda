@@ -4,6 +4,12 @@
   "description": "My awesome Nuxt.js project",
   "author": "Sh031224",
   "private": true,
+  "config": {
+    "nuxt": {
+      "host": "192.168.35.254",
+      "port": "9000"
+    }
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
@@ -14,7 +20,9 @@
     "@nuxtjs/axios": "^5.3.6",
     "node-sass": "^4.13.1",
     "nuxt": "^2.0.0",
-    "sass-loader": "^8.0.2"
+    "sass-loader": "^8.0.2",
+    "vue-cookie": "^1.1.4",
+    "vue-sweetalert2": "^3.0.3"
   },
   "devDependencies": {}
 }

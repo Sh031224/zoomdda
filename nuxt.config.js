@@ -19,6 +19,9 @@ export default {
   /*
    ** Customize the progress-bar color
    */
+  router: {
+    middleware: ["auth"]
+  },
   loading: { color: "#fff" },
   /*
    ** Global CSS
@@ -27,7 +30,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ["~/plugins/vue-sweetalert2.js", "~/plugins/vue-cookie.js"],
   /*
    ** Nuxt.js dev-modules
    */

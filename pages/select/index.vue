@@ -1,29 +1,20 @@
 <template>
-  <div id="schedule">
-    <header></header>
-    <time-table />
+  <div id="select">
+    <select-box />
     <footer>
       <a href="https://github.com/Sh031224" target="blank">
         © 2020. Sh031224. All rights reserved.
       </a>
-      <nuxt-link v-if="!admin" to="/select">
-        <span>Admin Login</span>
-      </nuxt-link>
     </footer>
   </div>
 </template>
 
 <script>
-import TimeTable from "~/components/schedule/TimeTable";
+import SelectBox from "~/components/select/SelectBox";
 export default {
-  name: "schedule",
-  computed: {
-    admin() {
-      return this.$store.state.admin;
-    }
-  },
+  name: "Select",
   components: {
-    TimeTable
+    SelectBox
   }
 };
 </script>
@@ -31,9 +22,25 @@ export default {
 <style lang="scss">
 @import "~/assets/style/color.scss";
 
-html {
+#select {
+  min-height: 100vh;
+  display: flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  flex-direction: column;
+  -ms-flex-direction: column;
+  -webkit-box-orient: vertical;
+  text-align: center;
   background-color: $bg-color;
   background-color: var(--bg-color);
+  &::before,
+  &::after {
+    min-height: 30px;
+    display: block;
+    content: "";
+    height: 50%;
+    flex-grow: 1;
+  }
 }
 
 footer {

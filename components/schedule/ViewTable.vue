@@ -4,31 +4,42 @@
     <div id="view_table__box">
       <div id="view_table_input">
         <p class="empty" v-if="empty">정보가 없습니다.</p>
-        <p v-if="time_table.SUBJECT">과목 : {{ time_table.SUBJECT }}</p>
-        <p v-if="time_table.TEACHER">담당교사 : {{ time_table.TEACHER }}</p>
-        <p v-if="time_table.CHAPTER">Chapter : {{ time_table.CHAPTER }}</p>
-        <p v-if="time_table.TOPIC">주제 : {{ time_table.TOPIC }}</p>
-        <p v-if="time_table.DESCRIPTION">
-          상세설명 : {{ time_table.DESCRIPTION }}
+        <p v-if="time_table.SUBJECT">
+          <b>과목</b><br />{{ time_table.SUBJECT }}
         </p>
-        <p v-if="time_table.ZOOM_ID">
+        <p v-if="time_table.TEACHER">
+          <b>담당교사</b><br />{{ time_table.TEACHER }}
+        </p>
+        <p v-if="time_table.CHAPTER">
+          <b>차시</b><br />{{ time_table.CHAPTER }}
+        </p>
+        <p v-if="time_table.TOPIC"><b>주제</b><br />{{ time_table.TOPIC }}</p>
+        <p v-if="time_table.DESCRIPTION">
+          <b>상세설명</b><br />{{ time_table.DESCRIPTION }}
+        </p>
+        <p v-if="time_table.ZOOM_ID || time_table.CLASSROOM">
+          <b>링크 바로가기</b>
+          <br />
           <a
             target="blank"
             :href="time_table.ZOOM_ID"
             v-if="time_table.ZOOM_ID"
             class="link"
           >
-            줌
+            <img class="zoom_img" src="~/assets/zoom.png" alt="zoom" />
           </a>
-        </p>
-        <p v-if="time_table.CLASSROOM">
+          &nbsp; &nbsp;
           <a
             target="blank"
             :href="time_table.CLASSROOM"
             v-if="time_table.CLASSROOM"
             class="link"
           >
-            클래스룸
+            <img
+              class="classroom_img"
+              src="~/assets/classroom.png"
+              alt="classroom"
+            />
           </a>
         </p>
       </div>
@@ -88,6 +99,16 @@ export default {
   left: 40px;
 }
 
+.zoom_img {
+  width: 40px;
+  margin-top: 10px;
+}
+
+.classroom_img {
+  margin-top: 10px;
+  width: 40px;
+}
+
 #view_table {
   position: fixed;
   width: 100%;
@@ -111,6 +132,12 @@ export default {
     color: $tb-color;
     color: var(--tb-color);
     margin-bottom: 20px;
+    text-align: left;
+    b {
+      font-size: 18px;
+      color: $red;
+      color: var(--red);
+    }
   }
   &__box {
     z-index: 10;

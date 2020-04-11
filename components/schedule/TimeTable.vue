@@ -6,8 +6,17 @@
       :grade="grade"
       :room="room"
     />
-    <h2 @click="change">{{ grade }}학년 {{ room }}반 시간표</h2>
-    <table>
+
+    <span class="title">
+      <img
+        @click="change"
+        class="change__img"
+        src="~/assets/change.png"
+        alt="change"
+      />
+      {{ grade }}학년 {{ room }}반 시간표
+    </span>
+    <table v-if="!load">
       <tr class="bn">
         <td class="sd"></td>
         <td class="tt_time">1</td>
@@ -179,14 +188,32 @@ export default {
 <style lang="scss">
 @import "~/assets/style/color.scss";
 
+.change__img {
+  width: 30px;
+  cursor: pointer;
+  margin-right: 20px;
+  align-self: center;
+  @media screen and (max-width: 450px) {
+    width: 20px;
+  }
+  @media screen and (max-width: 350px) {
+    width: 15px;
+  }
+}
+
 .container {
-  h2 {
+  text-align: center;
+  .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: $footer-color;
     color: var(--footer-color);
     text-align: center;
     margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 26px;
     margin-top: 50px;
-    cursor: pointer;
     @media screen and (max-width: 450px) {
       font-size: 16px;
     }

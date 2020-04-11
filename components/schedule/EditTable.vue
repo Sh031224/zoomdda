@@ -12,11 +12,11 @@
       </div>
       <div class="form_input">
         <input v-model="chapter" type="text" required />
-        <span @click="inputFocus(2)" class="grade_input">Chepter</span>
+        <span @click="inputFocus(2)" class="grade_input">차시</span>
       </div>
       <div class="form_input">
         <input v-model="topic" type="text" required />
-        <span @click="inputFocus(3)" class="grade_input">Topic</span>
+        <span @click="inputFocus(3)" class="grade_input">주제</span>
       </div>
       <div class="form_input">
         <input v-model="description" type="text" required />
@@ -24,11 +24,11 @@
       </div>
       <div class="form_input">
         <input v-model="zoom_id" type="text" required />
-        <span @click="inputFocus(5)" class="grade_input">Zoom</span>
+        <span @click="inputFocus(5)" class="grade_input">줌</span>
       </div>
       <div class="form_input">
         <input v-model="classroom" type="text" required />
-        <span @click="inputFocus(6)" class="grade_input">ClassRoom</span>
+        <span @click="inputFocus(6)" class="grade_input">클래스룸</span>
       </div>
       <button @click="close" class="cancel">취소</button>
       <button @click="onSubmit">완료</button>

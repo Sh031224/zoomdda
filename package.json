@@ -4,17 +4,13 @@
   "description": "My awesome Nuxt.js project",
   "author": "Sh031224",
   "private": true,
-  "config": {
-    "nuxt": {
-      "host": "192.168.35.254",
-      "port": "9000"
-    }
-  },
+  "homepage": "http://www.zoomdda.kro.kr",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
@@ -24,5 +20,7 @@
     "vue-cookie": "^1.1.4",
     "vue-sweetalert2": "^3.0.3"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "gh-pages": "^2.2.0"
+  }
 }

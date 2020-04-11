@@ -10,10 +10,6 @@
         <p v-if="time_table.TEACHER">
           <b>담당교사</b><br />{{ time_table.TEACHER }}
         </p>
-        <p v-if="time_table.CHAPTER">
-          <b>차시</b><br />{{ time_table.CHAPTER }}
-        </p>
-        <p v-if="time_table.TOPIC"><b>주제</b><br />{{ time_table.TOPIC }}</p>
         <p v-if="time_table.DESCRIPTION">
           <b>상세설명</b><br />{{ time_table.DESCRIPTION }}
         </p>

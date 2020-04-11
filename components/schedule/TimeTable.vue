@@ -56,9 +56,9 @@
               v-if="subject.ZOOM_ID"
               class="link"
             >
-              줌
+              실시간
             </a>
-            <br class="br_" />
+            <br />
             <a
               target="blank"
               :href="subject.CLASSROOM"
@@ -236,13 +236,6 @@ table {
   table-layout: fixed;
 }
 
-.br_ {
-  display: none;
-  @media screen and (max-width: 450px) {
-    display: inline;
-  }
-}
-
 table,
 td,
 tr {
@@ -296,7 +289,7 @@ tr {
 .tt_time {
   background-color: $tb-week;
   background-color: var(--tb-week);
-  width: 100px;
+  width: 150px;
 }
 
 .clock {

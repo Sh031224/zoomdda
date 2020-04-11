@@ -11,24 +11,16 @@
         <span @click="inputFocus(1)" class="grade_input">교사</span>
       </div>
       <div class="form_input">
-        <input v-model="chapter" type="text" required />
-        <span @click="inputFocus(2)" class="grade_input">차시</span>
-      </div>
-      <div class="form_input">
-        <input v-model="topic" type="text" required />
-        <span @click="inputFocus(3)" class="grade_input">주제</span>
-      </div>
-      <div class="form_input">
         <input v-model="description" type="text" required />
-        <span @click="inputFocus(4)" class="grade_input">설명</span>
+        <span @click="inputFocus(2)" class="grade_input">설명</span>
       </div>
       <div class="form_input">
         <input v-model="zoom_id" type="text" required />
-        <span @click="inputFocus(5)" class="grade_input">줌</span>
+        <span @click="inputFocus(3)" class="grade_input">실시간</span>
       </div>
       <div class="form_input">
         <input v-model="classroom" type="text" required />
-        <span @click="inputFocus(6)" class="grade_input">클래스룸</span>
+        <span @click="inputFocus(4)" class="grade_input">클래스룸</span>
       </div>
       <button @click="close" class="cancel">취소</button>
       <button @click="onSubmit">완료</button>
@@ -64,12 +56,10 @@ export default {
   },
   data() {
     return {
-      chapter: this.time_table.CHAPTER,
       classroom: this.time_table.CLASSROOM,
       description: this.time_table.DESCRIPTION,
       subject: this.time_table.SUBJECT,
       teacher: this.time_table.TEACHER,
-      topic: this.time_table.TOPIC,
       zoom_id: this.time_table.ZOOM_ID,
       day_of_week: ""
     };
@@ -102,18 +92,13 @@ export default {
       return true;
     },
     onSubmit() {
-      this.chapter = this.nullCheck(this.chapter);
       this.classroom = this.nullCheck(this.classroom);
       this.description = this.nullCheck(this.description);
       this.subject = this.nullCheck(this.subject);
       this.teacher = this.nullCheck(this.teacher);
-      this.topic = this.nullCheck(this.topic);
       this.zoom_id = this.nullCheck(this.zoom_id);
       axios
         .put(`${this.$store.state.url}/time-table`, {
-          chapter: this.check(this.chapter, this.time_table.CHAPTER)
-            ? this.chapter
-            : this.time_table.CHAPTER,
           classroom: this.check(this.classroom, this.time_table.CLASSROOM)
             ? this.classroom
             : this.time_table.CLASSROOM,
@@ -126,9 +111,6 @@ export default {
           teacher: this.check(this.teacher, this.time_table.TEACHER)
             ? this.teacher
             : this.time_table.TEACHER,
-          topic: this.check(this.topic, this.time_table.TOPIC)
-            ? this.topic
-            : this.time_table.TOPIC,
           zoom_id: this.check(this.zoom_id, this.time_table.ZOOM_ID)
             ? this.zoom_id
             : this.time_table.ZOOM_ID,

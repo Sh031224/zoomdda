@@ -7,7 +7,7 @@
         © 2020. Sh031224. All rights reserved.
       </a>
       <nuxt-link v-if="!admin" to="/select">
-        <span>Admin Login</span>
+        <span>&nbsp; Admin Login</span>
       </nuxt-link>
     </footer>
   </div>

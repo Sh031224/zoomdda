@@ -4,11 +4,11 @@
     <div id="edit_table__box">
       <div class="form_input">
         <input v-model="subject" type="text" required />
-        <span @click="inputFocus(0)" class="grade_input">과목 <b>*</b></span>
+        <span @click="inputFocus(0)" class="grade_input">과목</span>
       </div>
       <div class="form_input">
         <input v-model="teacher" type="text" required />
-        <span @click="inputFocus(1)" class="grade_input">교사 <b>*</b></span>
+        <span @click="inputFocus(1)" class="grade_input">교사</span>
       </div>
       <div class="form_input">
         <input v-model="chapter" type="text" required />
@@ -109,46 +109,41 @@ export default {
       this.teacher = this.nullCheck(this.teacher);
       this.topic = this.nullCheck(this.topic);
       this.zoom_id = this.nullCheck(this.zoom_id);
-      if (this.subject && this.teacher) {
-        axios
-          .put(`${this.$store.state.url}/time-table`, {
-            chapter: this.check(this.chapter, this.time_table.CHAPTER)
-              ? this.chapter
-              : this.time_table.CHAPTER,
-            classroom: this.check(this.classroom, this.time_table.CLASSROOM)
-              ? this.classroom
-              : this.time_table.CLASSROOM,
-            description: this.check(
-              this.description,
-              this.time_table.DESCRIPTION
-            )
-              ? this.description
-              : this.time_table.DESCRIPTION,
-            subject: this.check(this.subject, this.time_table.SUBJECT)
-              ? this.subject
-              : this.time_table.SUBJECT,
-            teacher: this.check(this.teacher, this.time_table.TEACHER)
-              ? this.teacher
-              : this.time_table.TEACHER,
-            topic: this.check(this.topic, this.time_table.TOPIC)
-              ? this.topic
-              : this.time_table.TOPIC,
-            zoom_id: this.check(this.zoom_id, this.time_table.ZOOM_ID)
-              ? this.zoom_id
-              : this.time_table.ZOOM_ID,
-            grade: this.grade,
-            _class: this._class,
-            day: this.day_of_week,
-            room: this.room
-          })
-          .then(res => {
-            history.go(0);
-          })
-          .catch(() => {
-            this.$emit("onClose");
-            this.$swal("오류", "권한이 없습니다.", "error");
-          });
-      }
+      axios
+        .put(`${this.$store.state.url}/time-table`, {
+          chapter: this.check(this.chapter, this.time_table.CHAPTER)
+            ? this.chapter
+            : this.time_table.CHAPTER,
+          classroom: this.check(this.classroom, this.time_table.CLASSROOM)
+            ? this.classroom
+            : this.time_table.CLASSROOM,
+          description: this.check(this.description, this.time_table.DESCRIPTION)
+            ? this.description
+            : this.time_table.DESCRIPTION,
+          subject: this.check(this.subject, this.time_table.SUBJECT)
+            ? this.subject
+            : this.time_table.SUBJECT,
+          teacher: this.check(this.teacher, this.time_table.TEACHER)
+            ? this.teacher
+            : this.time_table.TEACHER,
+          topic: this.check(this.topic, this.time_table.TOPIC)
+            ? this.topic
+            : this.time_table.TOPIC,
+          zoom_id: this.check(this.zoom_id, this.time_table.ZOOM_ID)
+            ? this.zoom_id
+            : this.time_table.ZOOM_ID,
+          grade: this.grade,
+          _class: this._class,
+          day: this.day_of_week,
+          room: this.room
+        })
+        .then(res => {
+          history.go(0);
+        })
+        .catch(() => {
+          this.$emit("onClose");
+          this.$swal("오류", "권한이 없습니다.", "error");
+        });
     },
     close() {
       this.$emit("onClose");
@@ -257,9 +252,6 @@ export default {
         }
         @media screen and (max-width: 350px) {
           top: 5px;
-        }
-        b {
-          color: #d85a5a;
         }
       }
       input:focus ~ .grade_input {

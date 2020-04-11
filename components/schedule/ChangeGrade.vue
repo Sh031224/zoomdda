@@ -6,6 +6,7 @@
         <input
           v-model="new_grade"
           @keydown="inputNum(0)"
+          @keydown.enter="inputNext(0)"
           type="text"
           maxlength="1"
           required
@@ -16,6 +17,7 @@
         <input
           v-model="new_room"
           @keydown="inputNum(1)"
+          @keydown.enter="inputNext(1)"
           type="text"
           maxlength="1"
           required
@@ -46,9 +48,12 @@ export default {
       new_room: this.room
     };
   },
+  mounted() {
+    document.getElementsByTagName("input")[0].select();
+  },
   methods: {
     inputFocus(idx) {
-      document.getElementsByTagName("input")[idx].focus();
+      document.getElementsByTagName("input")[idx].select();
     },
     close() {
       this.$emit("onClose");
@@ -68,6 +73,13 @@ export default {
         this.$cookie.set("grade", this.new_grade, { expires: 365 });
         this.$cookie.set("room", this.new_room, { expires: 365 });
         history.go(0);
+      }
+    },
+    inputNext(idx) {
+      if (idx === 0) {
+        document.getElementsByTagName("input")[idx + 1].select();
+      } else {
+        this.onSubmit();
       }
     }
   }

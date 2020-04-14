@@ -37,40 +37,43 @@
         <td class="tt_time clock">14:20~15:10</td>
         <td class="tt_time clock">15:20~16:10</td>
       </tr>
-      <tbody v-for="(day, index) in days" :key="index">
-        <tr :class="{ tt_height: true, today: getToday(day) }">
-          <td rowspan="4" class="day_of_week">{{ day }}</td>
-          <td
-            @click="onClick(subject, day, index)"
-            class="subject_cell"
-            v-for="(subject, index) in getWeek(day)"
-            :key="index"
+      <tr
+        v-for="(day, index) in days"
+        :key="index"
+        :class="{ tt_height: true, today: getToday(index + 1) }"
+      >
+        <td class="day_of_week">{{ day }}</td>
+        <td
+          @click="onClick(subject, day, index)"
+          :class="{ subject_cell: true, now: getSubject(day, index + 1) }"
+          v-for="(subject, index) in getWeek(day)"
+          :key="index"
+        >
+          <span class="tt_subject">{{ subject.SUBJECT }}</span>
+          <br />
+          <span>{{ subject.TEACHER }}</span>
+          <br />
+          <a
+            target="blank"
+            :href="subject.ZOOM_ID"
+            v-if="subject.ZOOM_ID"
+            class="link"
           >
-            <span class="tt_subject">{{ subject.SUBJECT }}</span>
-            <br />
-            <span>{{ subject.TEACHER }}</span>
-            <br />
-            <a
-              target="blank"
-              :href="subject.ZOOM_ID"
-              v-if="subject.ZOOM_ID"
-              class="link"
-            >
-              실시간
-            </a>
-            <br />
-            <a
-              target="blank"
-              :href="subject.CLASSROOM"
-              v-if="subject.CLASSROOM"
-              class="link"
-            >
-              클래스룸
-            </a>
-          </td>
-        </tr>
-      </tbody>
+            실시간
+          </a>
+          <br />
+          <a
+            target="blank"
+            :href="subject.CLASSROOM"
+            v-if="subject.CLASSROOM"
+            class="link"
+          >
+            클래스룸
+          </a>
+        </td>
+      </tr>
     </table>
+
     <view-table
       v-if="view"
       @onEdit="openEdit"
@@ -137,7 +140,7 @@ export default {
         this.time_table = time_table;
         this.load = false;
       } catch (err) {
-        console.log(err);
+        this.$router.push({ path: "/select" });
       }
     },
     getWeek(day) {
@@ -153,10 +156,59 @@ export default {
         return this.time_table.FRI;
       }
     },
-    getToday(day) {
+    getToday(idx) {
+      console.log(idx);
+      if (idx === this.today.getDay()) {
+        return true;
+      } else if (this.today.getDay() > 5 && idx === 1) {
+        return true;
+      }
+    },
+    getRealToday(day) {
       const week = new Array("일", "월", "화", "수", "목", "금", "토");
       if (day === week[this.today.getDay()]) {
         return true;
+      }
+      return false;
+    },
+    getSubject(day, time) {
+      let end, start;
+      if (time === 1) {
+        end = { hour: 9, min: 30 };
+        start = { hour: 0, min: 0 };
+      } else if (time === 2) {
+        end = { hour: 10, min: 30 };
+        start = { hour: 9, min: 30 };
+      } else if (time === 3) {
+        end = { hour: 11, min: 30 };
+        start = { hour: 10, min: 30 };
+      } else if (time === 4) {
+        end = { hour: 12, min: 30 };
+        start = { hour: 11, min: 30 };
+      } else if (time === 5) {
+        end = { hour: 14, min: 10 };
+        start = { hour: 12, min: 30 };
+      } else if (time === 6) {
+        end = { hour: 15, min: 10 };
+        start = { hour: 14, min: 10 };
+      } else if (time === 7) {
+        end = { hour: 16, min: 10 };
+        start = { hour: 15, min: 10 };
+      }
+      if (this.today.getDay() > 5 && time === 1 && day === "월") {
+        console.log(this.today.getDay());
+        return true;
+      } else if (this.getRealToday(day)) {
+        if (
+          (start.hour < this.today.getHours() ||
+            (start.hour === this.today.getHours() &&
+              start.min < this.today.getMinutes())) &&
+          (end.hour > this.today.getHours() ||
+            (end.hour === this.today.getHours() &&
+              end.min > this.today.getMinutes()))
+        ) {
+          return true;
+        }
       }
       return false;
     },
@@ -236,9 +288,21 @@ table {
   table-layout: fixed;
 }
 
+.now {
+  border: 3px solid rgb(194, 21, 21) !important;
+  z-index: 5;
+}
+
+tbody {
+  margin: 0;
+  padding: 0;
+}
+
 table,
 td,
-tr {
+tr,
+tbody {
+  border-collapse: collapse;
   font-size: 16px;
   border: 1px solid $tb-border1;
   border: 1px solid var(--tb-border1);

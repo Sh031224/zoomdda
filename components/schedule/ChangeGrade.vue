@@ -49,7 +49,9 @@ export default {
     };
   },
   mounted() {
-    document.getElementsByTagName("input")[0].select();
+    setTimeout(() => {
+      document.getElementsByTagName("input")[0].select();
+    }, 100);
   },
   methods: {
     inputFocus(idx) {

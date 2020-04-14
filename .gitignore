@@ -10,6 +10,9 @@ yarn-error.log*
 /models/access.js
 /models/server.js
 
+server.key
+server.crt
+
 # Runtime data
 pids
 *.pid

@@ -7,7 +7,8 @@ const store = () =>
     state: {
       url: server,
       access: access_code,
-      admin: false
+      admin: false,
+      school_token: ""
     },
     mutations: {}
   });

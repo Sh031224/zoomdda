@@ -1,0 +1,98 @@
+<template>
+  <div id="school-loading" aria-live="polite" role="status">
+    <div>Loading...</div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+export default {
+  data() {
+    return {
+      school: parseInt(this.$router.app._route.query.school)
+    };
+  },
+  mounted() {
+    axios
+      .get(`${this.$store.state.url}/auth?school=${this.school}`)
+      .then(res => {
+        axios.defaults.headers.common["school-token"] =
+          res.data.data["school-token"];
+        this.$cookie.set("school_token", res.data.data["school-token"], {
+          expires: 365
+        });
+        this.$router.push({ path: "/select" });
+      })
+      .catch(() => {
+        alert("학교에서 알려준 URL로 접속해주세요.");
+        this.$router.push({ path: "/close" });
+      });
+  }
+};
+</script>
+
+<style lang="scss">
+@import "~/assets/style/color.scss";
+#school-loading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: $bg-color;
+  background-color: var(--bg-color);
+}
+
+#school-loading > div,
+#school-loading > div:after {
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+}
+
+#school-loading > div {
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border: 0.5rem solid #f5f5f5;
+  border-left: 0.5rem solid $bg-color;
+  border-left: 0.5rem solid var(--bg-color);
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: nuxtLoading 1.1s infinite linear;
+  animation: nuxtLoading 1.1s infinite linear;
+}
+
+#school-loading.error > div {
+  border-left: 0.5rem solid #ff4500;
+  animation-duration: 5s;
+}
+
+@-webkit-keyframes nuxtLoading {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes nuxtLoading {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+</style>

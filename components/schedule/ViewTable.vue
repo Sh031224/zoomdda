@@ -4,31 +4,31 @@
     <div id="view_table__box">
       <div id="view_table_input">
         <p class="empty" v-if="empty">정보가 없습니다.</p>
-        <p v-if="time_table.SUBJECT">
-          <b>과목</b><br />{{ time_table.SUBJECT }}
+        <p v-if="time_table.subject">
+          <b>과목</b><br />{{ time_table.subject }}
         </p>
-        <p v-if="time_table.TEACHER">
-          <b>담당교사</b><br />{{ time_table.TEACHER }}
+        <p v-if="time_table.teacher">
+          <b>담당교사</b><br />{{ time_table.teacher }}
         </p>
-        <p v-if="time_table.DESCRIPTION">
-          <b>상세설명</b><br />{{ time_table.DESCRIPTION }}
+        <p v-if="time_table.description">
+          <b>상세설명</b><br />{{ time_table.description }}
         </p>
-        <p v-if="time_table.ZOOM_ID || time_table.CLASSROOM">
+        <p v-if="time_table.video_url || time_table.classroom_url">
           <b>링크 바로가기</b>
           <br />
           <a
             target="blank"
-            :href="time_table.ZOOM_ID"
-            v-if="time_table.ZOOM_ID"
+            :href="time_table.video_url"
+            v-if="time_table.video_url"
             class="link"
           >
-            <img class="zoom_img" src="~/assets/zoom.png" alt="zoom" />
+            <img class="zoom_img" src="~/assets/zoom.png" alt="video" />
           </a>
           &nbsp; &nbsp;
           <a
             target="blank"
-            :href="time_table.CLASSROOM"
-            v-if="time_table.CLASSROOM"
+            :href="time_table.classroom_url"
+            v-if="time_table.classroom_url"
             class="link"
           >
             <img
@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     admin() {
-      return this.$store.state.admin;
+      return this.$store.state.admin.admin;
     }
   },
   data() {
@@ -66,13 +66,11 @@ export default {
   },
   mounted() {
     if (
-      !this.time_table.CHAPTER &&
-      !this.time_table.CLASSROOM &&
-      !this.time_table.DESCRIPTTION &&
-      !this.time_table.SUBJECT &&
-      !this.time_table.TEACHER &&
-      !this.time_table.TOPIC &&
-      !this.time_table.ZOOM_ID
+      !this.time_table.classroom_url &&
+      !this.time_table.description &&
+      !this.time_table.subject &&
+      !this.time_table.teacher &&
+      !this.time_table.video_id
     )
       this.empty = true;
   },

@@ -48,81 +48,71 @@ export default {
   },
   computed: {
     grade() {
-      return this.$cookie.get("grade");
+      return parseInt(this.$cookie.get("grade"));
     },
     room() {
-      return this.$cookie.get("room");
+      return parseInt(this.$cookie.get("room"));
     }
   },
   data() {
     return {
-      classroom: this.time_table.CLASSROOM,
-      description: this.time_table.DESCRIPTION,
-      subject: this.time_table.SUBJECT,
-      teacher: this.time_table.TEACHER,
-      zoom_id: this.time_table.ZOOM_ID,
+      classroom: this.time_table.classroom_url,
+      description: this.time_table.description,
+      subject: this.time_table.subject,
+      teacher: this.time_table.teacher,
+      zoom_id: this.time_table.video_url,
       day_of_week: ""
     };
   },
   mounted() {
     if (this.day === "월") {
-      this.day_of_week = "MON";
+      this.day_of_week = 0;
     } else if (this.day === "화") {
-      this.day_of_week = "TUE";
+      this.day_of_week = 1;
     } else if (this.day === "수") {
-      this.day_of_week = "WED";
+      this.day_of_week = 2;
     } else if (this.day === "목") {
-      this.day_of_week = "THU";
+      this.day_of_week = 3;
     } else if (this.day === "금") {
-      this.day_of_week = "FRI";
+      this.day_of_week = 4;
     }
   },
   methods: {
-    nullCheck(val) {
-      if (val === "") {
-        return null;
-      }
-      return val;
+    nullCheck() {
+      if (this.undefine(this.subject)) this.subject = "";
+      if (this.undefine(this.teacher)) this.teacher = "";
+      if (this.undefine(this.description)) this.description = "";
+      if (this.undefine(this.zoom_id)) this.zoom_id = "";
+      if (this.undefine(this.classroom)) this.classroom = "";
     },
     inputFocus(idx) {
       document.getElementsByTagName("input")[idx].focus();
     },
-    check(value, original) {
-      if (value === original) return false;
-      return true;
+    undefine(value) {
+      if (value === undefined) return true;
+      return false;
     },
     onSubmit() {
-      this.classroom = this.nullCheck(this.classroom);
-      this.description = this.nullCheck(this.description);
-      this.subject = this.nullCheck(this.subject);
-      this.teacher = this.nullCheck(this.teacher);
-      this.zoom_id = this.nullCheck(this.zoom_id);
+      this.nullCheck();
       axios
-        .put(`${this.$store.state.url}/time-table`, {
-          classroom: this.check(this.classroom, this.time_table.CLASSROOM)
-            ? this.classroom
-            : this.time_table.CLASSROOM,
-          description: this.check(this.description, this.time_table.DESCRIPTION)
-            ? this.description
-            : this.time_table.DESCRIPTION,
-          subject: this.check(this.subject, this.time_table.SUBJECT)
-            ? this.subject
-            : this.time_table.SUBJECT,
-          teacher: this.check(this.teacher, this.time_table.TEACHER)
-            ? this.teacher
-            : this.time_table.TEACHER,
-          zoom_id: this.check(this.zoom_id, this.time_table.ZOOM_ID)
-            ? this.zoom_id
-            : this.time_table.ZOOM_ID,
+        .post(`${this.$store.state.url}/time-table`, {
+          school_idx: 0,
           grade: this.grade,
-          _class: this._class,
+          room: this.room,
           day: this.day_of_week,
-          room: this.room
+          _class: this._class + 1,
+          subject: this.subject,
+          teacher: this.teacher,
+          description: this.description,
+          video_url: this.zoom_id,
+          classroom_url: this.classroom
         })
         .then(res => {
           history.go(0);
         })
-        .catch(() => {
+        .catch(error => {
+          console.log(error.response);
+
           this.$emit("onClose");
           this.$swal("오류", "권한이 없습니다.", "error");
         });

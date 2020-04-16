@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   mounted() {
     const prefersDark =
@@ -13,6 +14,33 @@ export default {
 
     if (prefersDark) {
       document.getElementsByTagName("html")[0].classList.add("darkmode");
+    }
+
+    if (this.$cookie.get("school_token")) {
+      axios
+        .get(`${this.$store.state.url}/school`)
+        .then(res => {
+          this.$store.commit(
+            "admin/changeAccess",
+            res.data.data.school.ADMIN_CODE
+          );
+          this.$store.commit(
+            "school/addClass",
+            res.data.data.school.CLASS_INFO
+          );
+          this.$store.commit("school/addName", res.data.data.school.NAME);
+
+          if (res.data.data.school.ADMIN_CODE === this.$cookie.get("access")) {
+            axios.defaults.headers.common["access_code"] = this.$cookie.get(
+              "access"
+            );
+            this.$store.commit("admin/changeAdmin", true);
+          }
+        })
+        .catch(() => {
+          alert("알 수 없는 오류가 발생했습니다.");
+          this.$router.push({ path: "/close" });
+        });
     }
   }
 };

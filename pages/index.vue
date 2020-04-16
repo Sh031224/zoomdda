@@ -19,7 +19,7 @@ export default {
   name: "schedule",
   computed: {
     admin() {
-      return this.$store.state.admin;
+      return this.$store.state.admin.admin;
     }
   },
   components: {

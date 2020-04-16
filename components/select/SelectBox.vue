@@ -1,26 +1,14 @@
 <template>
   <section id="select_box">
-    <h1>DGSW</h1>
-    <h3>시작하기</h3>
+    <h1>시작하기</h1>
+    <h3>아래 정보를 입력해주세요.</h3>
     <div id="form">
       <div class="form_input">
-        <input
-          @keydown="inputNum(0)"
-          v-model="grade"
-          type="text"
-          maxlength="1"
-          required
-        />
+        <input v-model="grade" type="number" required />
         <span @click="inputFocus(0)" class="grade_input">학년</span>
       </div>
       <div class="form_input">
-        <input
-          @keydown="inputNum(1)"
-          v-model="room"
-          type="text"
-          maxlength="1"
-          required
-        />
+        <input v-model="room" type="number" required />
         <span @click="inputFocus(1)" class="grade_input">반</span>
       </div>
       <label id="teacher_check">
@@ -57,13 +45,30 @@ export default {
       access: ""
     };
   },
+  computed: {
+    admin_code() {
+      return this.$store.state.admin.access;
+    },
+    class() {
+      return this.$store.state.school.class;
+    }
+  },
+  mounted() {
+    if (this.$cookie.get("grade")) {
+      this.grade = this.$cookie.get("grade");
+    }
+    if (this.$cookie.get("room")) {
+      this.room = this.$cookie.get("room");
+    }
+  },
   methods: {
     onSubmit() {
       if (this.setState()) {
         if (this.teacher) {
-          if (this.access === this.$store.state.access) {
+          if (this.access === this.admin_code) {
             this.$cookie.set("access", this.access, { expires: 365 });
             axios.defaults.headers.common.access_code = this.access;
+            this.$store.state.admin.admin = true;
             this.setCookie();
             this.$router.push({ path: "/" });
           } else {
@@ -75,28 +80,24 @@ export default {
         }
         this.setCookie();
       } else {
-        this.$swal("오류", "학년 또는 반을 입력해주세요.", "error");
+        this.$swal("오류", "올바른 학년 또는 반을 입력해주세요.", "error");
       }
     },
     setState() {
-      if (this.grade && this.room) {
+      if (
+        this.grade > 0 &&
+        this.grade <= Object.keys(this.class).length &&
+        this.room > 0 &&
+        this.room <= this.class[this.grade].length
+      ) {
         return true;
+      } else {
+        return false;
       }
-      return false;
     },
     setCookie() {
       this.$cookie.set("grade", this.grade, { expires: 365 });
       this.$cookie.set("room", this.room, { expires: 365 });
-    },
-    inputNum(idx) {
-      const obj = document.getElementsByTagName("input")[idx];
-      const number = obj.value.replace(/[^1-3]/g, "");
-      if (idx === 0) {
-        this.grade = number;
-      } else {
-        this.room = number;
-      }
-      obj.value = number;
     },
     inputFocus(idx) {
       document.getElementsByTagName("input")[idx].focus();
@@ -107,6 +108,12 @@ export default {
 
 <style lang="scss">
 @import "~/assets/style/color.scss";
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 .fade-enter-active,
 .fade-leave-active {

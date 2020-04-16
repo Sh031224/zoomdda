@@ -6,7 +6,7 @@
       :grade="grade"
       :room="room"
     />
-
+    <h1>{{ name }}</h1>
     <span class="title">
       <img
         @click="change"
@@ -49,27 +49,34 @@
           v-for="(subject, index) in getWeek(day)"
           :key="index"
         >
-          <span class="tt_subject">{{ subject.SUBJECT }}</span>
+          <span v-if="subject.subject" class="tt_subject">{{
+            subject.subject
+          }}</span>
           <br />
-          <span>{{ subject.TEACHER }}</span>
+          <span v-if="subject.teacher">{{ subject.teacher }}</span>
           <br />
-          <a
-            target="blank"
-            :href="subject.ZOOM_ID"
-            v-if="subject.ZOOM_ID"
-            class="link"
-          >
-            실시간
-          </a>
-          <br />
-          <a
-            target="blank"
-            :href="subject.CLASSROOM"
-            v-if="subject.CLASSROOM"
-            class="link"
-          >
-            클래스룸
-          </a>
+          <span class="link_area">
+            <a
+              target="blank"
+              :href="subject.video_url"
+              v-if="subject.video_url"
+              class="link"
+            >
+              <img
+                class="time_img"
+                src="~/assets/classroom.png"
+                alt="classroom"
+              />
+            </a>
+            <a
+              target="blank"
+              :href="subject.classroom_url"
+              v-if="subject.classroom_url"
+              class="link"
+            >
+              <img class="time_img" src="~/assets/zoom.png" alt="video" />
+            </a>
+          </span>
         </td>
       </tr>
     </table>
@@ -122,6 +129,9 @@ export default {
     },
     room() {
       return this.$cookie.get("room");
+    },
+    name() {
+      return this.$store.state.school.name;
     }
   },
   mounted() {
@@ -145,19 +155,18 @@ export default {
     },
     getWeek(day) {
       if (day === "월") {
-        return this.time_table.MON;
+        return this.time_table.slice(0, 7);
       } else if (day === "화") {
-        return this.time_table.TUE;
+        return this.time_table.slice(7, 14);
       } else if (day === "수") {
-        return this.time_table.WED;
+        return this.time_table.slice(14, 21);
       } else if (day === "목") {
-        return this.time_table.THU;
+        return this.time_table.slice(21, 28);
       } else if (day === "금") {
-        return this.time_table.FRI;
+        return this.time_table.slice(28, 35);
       }
     },
     getToday(idx) {
-      console.log(idx);
       if (idx === this.today.getDay()) {
         return true;
       } else if (this.today.getDay() > 5 && idx === 1) {
@@ -196,7 +205,6 @@ export default {
         start = { hour: 15, min: 10 };
       }
       if (this.today.getDay() > 5 && time === 1 && day === "월") {
-        console.log(this.today.getDay());
         return true;
       } else if (this.getRealToday(day)) {
         if (
@@ -241,20 +249,38 @@ export default {
 @import "~/assets/style/color.scss";
 
 .change__img {
-  width: 30px;
+  width: 18px;
   cursor: pointer;
   margin-right: 20px;
   align-self: center;
   @media screen and (max-width: 450px) {
-    width: 20px;
+    width: 18px;
   }
   @media screen and (max-width: 350px) {
     width: 15px;
   }
 }
 
+.link_area {
+  text-align: center;
+  display: inline-block;
+  @media screen and (max-width: 630px) {
+    padding-top: 5px;
+  }
+}
+
+.time_img {
+  width: 100%;
+  max-width: 30px;
+}
+
 .container {
   text-align: center;
+  h1 {
+    color: #dfdf13;
+    font-size: 19px;
+    margin-top: 20px;
+  }
   .title {
     display: flex;
     justify-content: center;
@@ -264,8 +290,8 @@ export default {
     text-align: center;
     margin-bottom: 20px;
     font-weight: 700;
-    font-size: 26px;
-    margin-top: 50px;
+    font-size: 16px;
+    margin-top: 15px;
     @media screen and (max-width: 450px) {
       font-size: 16px;
     }
@@ -276,6 +302,8 @@ export default {
 }
 
 table {
+  width: 100%;
+  max-width: 1000px;
   margin: 0 auto;
   border-collapse: collapse;
   color: $tb-color;
@@ -284,8 +312,7 @@ table {
   position: relative;
   background-color: $box-color;
   background-color: var(--box-color);
-  overflow: scroll;
-  table-layout: fixed;
+  overflow: hidden;
 }
 
 .now {
@@ -293,17 +320,14 @@ table {
   z-index: 5;
 }
 
-tbody {
-  margin: 0;
-  padding: 0;
-}
-
 table,
 td,
-tr,
-tbody {
+tr {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   border-collapse: collapse;
-  font-size: 16px;
+  font-size: 14px;
   border: 1px solid $tb-border1;
   border: 1px solid var(--tb-border1);
   word-break: break-all;
@@ -326,7 +350,7 @@ tbody {
 .day_of_week {
   background-color: $tb-week;
   background-color: var(--tb-week);
-  width: 130px;
+  width: 120px;
   font-size: 17px;
   @media screen and (max-width: 700px) {
     width: auto;
@@ -343,7 +367,7 @@ tbody {
 
 .subject_cell {
   cursor: pointer;
-  width: 10px;
+  padding: 5px;
   &:hover {
     background-color: $tb-week;
     background-color: var(--tb-week);
@@ -364,6 +388,9 @@ tbody {
 
 .tt_height {
   height: 100px;
+  @media screen and (max-width: 600px) {
+    height: 130px;
+  }
 }
 
 .nn {
@@ -391,5 +418,17 @@ tbody {
 .link {
   color: $btn-blue;
   color: var(--btn-blue);
+  display: inline-block;
+  position: relative;
+  width: 30%;
+  margin: 3px;
+  @media screen and (max-width: 630px) {
+    width: 30%;
+    margin-top: 2px;
+  }
+  @media screen and (max-width: 450px) {
+    width: 40%;
+    margin-top: 2px;
+  }
 }
 </style>

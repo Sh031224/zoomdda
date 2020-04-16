@@ -29,7 +29,7 @@ export default {
    ** Customize the progress-bar color
    */
   router: {
-    middleware: ["auth"]
+    middleware: ["auth", "school"]
   },
   loading: { color: "#fff" },
   /*

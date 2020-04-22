@@ -28,6 +28,7 @@ export default {
               "admin/changeAccess",
               res.data.data.school.ADMIN_CODE
             );
+            this.$store.common("admin/changeAdmin", false);
             this.$store.commit(
               "school/addClass",
               res.data.data.school.CLASS_INFO

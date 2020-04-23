@@ -49,7 +49,7 @@
   
   <img src="https://user-images.githubusercontent.com/51149996/79978892-9d4d1400-84db-11ea-8e68-7b94809f6827.png" width="300px">
 
-  - 클래스룸의 url중 `u/0` 부분을 사용자 계정에 맞게 변경
+  - 클래스룸의 url중 `u/0` 부분을 클래스룸에 가입한 계정에 맞게 변경
   - ex) 첫 번째 계정 : `u/0`, 두 번째 계정 : `u/1`
   
   <img src="https://user-images.githubusercontent.com/51149996/79979283-3aa84800-84dc-11ea-9721-93dd15fa2deb.PNG" width="200px">

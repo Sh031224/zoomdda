@@ -62,11 +62,7 @@
               v-if="subject.video_url"
               class="link"
             >
-              <img
-                class="time_img"
-                src="~/assets/classroom.png"
-                alt="classroom"
-              />
+              <img class="time_img" src="~/assets/zoom.png" alt="video" />
             </a>
             <a
               target="blank"
@@ -74,7 +70,11 @@
               v-if="subject.classroom_url"
               class="link"
             >
-              <img class="time_img" src="~/assets/zoom.png" alt="video" />
+              <img
+                class="time_img"
+                src="~/assets/classroom.png"
+                alt="classroom"
+              />
             </a>
           </span>
         </td>

@@ -1,6 +1,5 @@
-# PAGES
+# 실시간
 
-This directory contains your Application Views and Routes.
-The framework reads all the `*.vue` files inside this directory and creates the router of your application.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/routing).
+- 실시간 수업이 있지만 교육청 정책상 링크를 표시하지 못하였습니다.
+  <br />
+- 해당 수업에 해당하는 실시간 수업에 접속해주세요.

@@ -17,7 +17,7 @@
           <b>링크 바로가기</b>
           <br />
           <a
-            target="blank"
+            target="_blank"
             :href="time_table.video_url"
             v-if="time_table.video_url"
             class="link"
@@ -26,7 +26,7 @@
           </a>
           &nbsp; &nbsp;
           <a
-            target="blank"
+            target="_blank"
             :href="time_table.classroom_url"
             v-if="time_table.classroom_url"
             class="link"

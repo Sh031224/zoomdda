@@ -57,7 +57,7 @@
           <br />
           <span class="link_area">
             <a
-              target="blank"
+              target="_blank"
               :href="subject.video_url"
               v-if="subject.video_url"
               class="link"
@@ -65,7 +65,7 @@
               <img class="time_img" src="~/assets/zoom.png" alt="video" />
             </a>
             <a
-              target="blank"
+              target="_blank"
               :href="subject.classroom_url"
               v-if="subject.classroom_url"
               class="link"
@@ -262,8 +262,12 @@ export default {
 }
 
 .link_area {
+  margin: 0 auto;
+  margin-top: 13px;
   text-align: center;
-  display: inline-block;
+  display: block;
+  width: 60%;
+  position: relative;
   @media screen and (max-width: 630px) {
     padding-top: 5px;
   }
@@ -271,7 +275,11 @@ export default {
 
 .time_img {
   width: 100%;
-  max-width: 30px;
+  max-width: 25px;
+  margin: 2px;
+  @media screen and (max-width: 450px) {
+    max-width: 20px;
+  }
 }
 
 .container {
@@ -415,20 +423,20 @@ tr {
     border: 1px solid var(--tb-border1) !important;
   }
 }
-.link {
-  color: $btn-blue;
-  color: var(--btn-blue);
-  display: inline-block;
-  position: relative;
-  width: 30%;
-  margin: 3px;
-  @media screen and (max-width: 630px) {
-    width: 30%;
-    margin-top: 2px;
-  }
-  @media screen and (max-width: 450px) {
-    width: 40%;
-    margin-top: 2px;
-  }
-}
+// .link {
+//   color: $btn-blue;
+//   color: var(--btn-blue);
+//   display: inline-block;
+//   position: relative;
+//   width: 30%;
+//   margin: 3px;
+//   @media screen and (max-width: 630px) {
+//     width: 30%;
+//     margin-top: 2px;
+//   }
+//   @media screen and (max-width: 450px) {
+//     width: 40%;
+//     margin-top: 2px;
+//   }
+// }
 </style>

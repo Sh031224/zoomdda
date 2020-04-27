@@ -136,8 +136,15 @@ export default {
   },
   mounted() {
     this.getTimeTable();
+    this.getDate();
   },
   methods: {
+    getDate() {
+      this.today = new Date();
+      setTimeout(() => {
+        this.getDate();
+      }, 1000);
+    },
     async getTimeTable() {
       try {
         const {

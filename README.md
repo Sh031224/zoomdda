@@ -68,6 +68,6 @@
 
 - 학교 시간표를 웹상에서 쉽게 관리할 수 있습니다.
 - 개발
-  - 웹　: 차승호
-  - 서버: 최진우
+  - 웹　: [차승호](https://github.com/Sh031224)
+  - 서버: [최진우](https://github.com/Choi-jinwoo)
 - 문의: 1cktmdgh2@gmail.com
